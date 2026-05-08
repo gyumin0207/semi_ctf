@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
 
-FLAG = os.environ.get("FLAG", "DH{this_is_fake_flag_for_local_test}")
+FLAG = os.environ.get("FLAG", "DH{this_is_fake_flag}")
 
 DATABASE = '/app/ctf.db'
 
@@ -42,7 +42,7 @@ def init_db():
     
     cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (1, 'alice', 'alice1234', 'user')")
     cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (2, 'bob', 'b0bpassword', 'user')")
-    cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (3, 'admin', 'sup3r_s3cr3t_4dm1n!', 'admin')")
+    cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (3, 'admin', 'metamontg123', 'admin')")
 
     
     cursor.execute("INSERT OR IGNORE INTO secrets (id, name, value) VALUES (1, 'FLAG', ?)", (FLAG,))

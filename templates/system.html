@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head><title>System Inspector</title></head>
+<head>
+    <title>System Inspector</title>
+    <style>
+        body { font-family: 'Courier New', Courier, monospace; padding: 2rem; background: #222; color: #00ff00; }
+        h1 { border-bottom: 1px solid #00ff00; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #444; padding: 8px; text-align: left; }
+        th { background: #333; }
+        tr:hover { background: #2a2a2a; }
+        .back-link { color: #888; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: #fff; }
+    </style>
+</head>
 <body>
-    <h1>💻 System Environment Variables</h1>
-    <p>아래 목록에서 <strong>FLAG</strong> 항목을 찾아보세요!</p>
-    <table border="1" style="width: 100%; border-collapse: collapse;">
-        <tr style="background: #eee;"><th>Key</th><th>Value</th></tr>
-        {% for k, v in env_vars.items() %}
-        <tr><td>{{ k }}</td><td>{{ v }}</td></tr>
-        {% endfor %}
+    <h1>[INTERNAL] System Environment Inspector</h1>
+    <p>>_ 서버의 현재 런타임 환경 변수 스택입니다. 인가된 관리자 외 열람을 금지합니다.</p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Variable Name</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k, v in env_vars.items() %}
+            <tr>
+                <td>{{ k }}</td>
+                <td>{{ v }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
-    <br><a href="/dashboard">뒤로가기</a>
+    
+    <br>
+    <a href="/dashboard" class="back-link">Return to Dashboard</a>
 </body>
 </html>

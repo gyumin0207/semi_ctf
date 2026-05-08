@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Environment Inspector</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #333; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .highlight { color: #d9534f; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>💻 System Environment Variables</h1>
+    <p>서버의 현재 환경 설정 상태입니다. 보안에 유의하세요.</p>
+    <hr>
+    <table>
+        <tr>
+            <th>Variable Name</th>
+            <th>Value</th>
+        </tr>
+        {% for key, value in env_vars.items() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+    <a href="/dashboard">대시보드로 돌아가기</a>
+</body>
+</html>

@@ -42,7 +42,7 @@ def init_db():
     
     cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (1, 'alice', 'alice1234', 'user')")
     cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (2, 'bob', 'b0bpassword', 'user')")
-    cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (3, 'admin', 'metamontg123', 'admin')")
+    cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (3, 'admin', 'metamong123', 'admin')")
 
     
     cursor.execute("INSERT OR IGNORE INTO secrets (id, name, value) VALUES (1, 'FLAG', ?)", (FLAG,))

@@ -3,7 +3,11 @@ import sqlite3
 import os
 
 app = Flask(__name__)
+
 app.secret_key = os.urandom(24)
+
+
+FLAG = os.environ.get("FLAG", "DH{this_is_fake_flag_for_local_test}")
 
 DATABASE = '/app/ctf.db'
 
@@ -16,7 +20,7 @@ def init_db():
     conn = get_db()
     cursor = conn.cursor()
 
-    # Users table (로그인용)
+    
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,7 +30,7 @@ def init_db():
         )
     ''')
 
-    # Secret table (플래그 보관)
+    
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS secrets (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -35,27 +39,23 @@ def init_db():
         )
     ''')
 
-    # 일반 사용자 데이터
+    
     cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (1, 'alice', 'alice1234', 'user')")
     cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (2, 'bob', 'b0bpassword', 'user')")
     cursor.execute("INSERT OR IGNORE INTO users (id, username, password, role) VALUES (3, 'admin', 'sup3r_s3cr3t_4dm1n!', 'admin')")
 
-    # 플래그 저장
-    cursor.execute("INSERT OR IGNORE INTO secrets (id, name, value) VALUES (1, 'FLAG', 'CTF{SQLi_1s_4lw4ys_d4ng3r0us_sanitize_inputs!}')")
+    
+    cursor.execute("INSERT OR IGNORE INTO secrets (id, name, value) VALUES (1, 'FLAG', ?)", (FLAG,))
     cursor.execute("INSERT OR IGNORE INTO secrets (id, name, value) VALUES (2, 'INTERNAL_KEY', 'INTERNAL-9f3a2b1c-do-not-share')")
 
     conn.commit()
     conn.close()
 
-# ──────────────────────────────────────────────
-# 라우트
-# ──────────────────────────────────────────────
-
 @app.route('/')
 def index():
     return redirect(url_for('login'))
 
-# [취약] 로그인 — SQL Injection 가능
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -66,7 +66,7 @@ def login():
         conn = get_db()
         cursor = conn.cursor()
 
-        # !! 취약한 쿼리 !!
+        
         query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
 
         try:
@@ -97,7 +97,7 @@ def dashboard():
                            username=session.get('username'),
                            role=session.get('role'))
 
-# [취약] 사용자 검색 — UNION-based SQL Injection 가능
+
 @app.route('/search')
 def search():
     if not session.get('logged_in'):
@@ -112,7 +112,7 @@ def search():
         conn = get_db()
         cursor = conn.cursor()
 
-        # !! 취약한 쿼리 !!
+        
         raw_query = f"SELECT id, username, role FROM users WHERE username LIKE '%{query_param}%'"
 
         try:

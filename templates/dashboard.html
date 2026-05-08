@@ -17,9 +17,9 @@
         <hr>
         {% if role == 'admin' %}
         <div class="admin-section">
-            <h3 style="margin: 0; color: #d9534f;">⚠️ Admin Privileges</h3>
-            <p>서버 환경 변수 정보를 점검합니다.</p>
-            <a href="/admin/system" class="admin-btn">⚙️ 시스템 정보 점검</a>
+        <h3 style="margin-top: 0; color: #d9534f;">⚠️ System Management</h3>
+        <p style="font-size: 0.85rem; color: #666;">서버의 현재 설정 상태와 환경 변수를 모니터링합니다.</p>
+        <a href="/admin/system" class="admin-btn">환경 변수 로그 확인</a>
         </div>
         {% endif %}
         <p><a href="/logout">Logout</a></p>

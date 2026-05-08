@@ -134,6 +134,18 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
+@app.route('/admin/system')
+def admin_system():
+    
+    if not session.get('logged_in') or session.get('role') != 'admin':
+        return "<h1>Access Denied</h1><p>관리자만 접근 가능합니다.</p>", 403
+    
+    import os
+    
+    env_vars = dict(os.environ)
+    
+    return render_template('system.html', env_vars=env_vars)
+
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000, debug=False)

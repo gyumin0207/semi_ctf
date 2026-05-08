@@ -15,7 +15,7 @@ c.execute('''CREATE TABLE IF NOT EXISTS secrets
 users = [
     (1, 'alice', 'alice1234', 'user'),
     (2, 'bob', 'b0bpassword', 'user'),
-    (3, 'admin', 'sup3r_s3cr3t_4dm1n!', 'admin')
+    (3, 'admin', 'metamong123', 'admin')
 ]
 secrets = [
     (1, 'FLAG', 'DH{this_is_fake_flag}'),

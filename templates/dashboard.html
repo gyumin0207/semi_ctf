@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; line-height: 1.6; }
+        .card { border: 1px solid #ddd; padding: 1rem; border-radius: 8px; max-width: 500px; }
+        .admin { color: gold; background: black; padding: 2px 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <div class="card">
+        <p>Your Role: 
+            {% if role == 'admin' %}
+                <span class="admin">ADMIN</span>
+            {% else %}
+                <span>USER</span>
+            {% endif %}
+        </p>
+        <hr>
+        <p><a href="{{ url_for('search') }}">Go to User Search Page</a></p>
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Search</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; }
+        .search-box { margin-bottom: 2rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f8f9fa; }
+        .debug-info { background: #eee; padding: 10px; margin-top: 2rem; border-radius: 5px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    <h1>User Search Portal</h1>
+
+    <div class="search-box">
+        <form method="GET">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search username...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in results %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.role }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif query %}
+        <p>No users found for "{{ query }}"</p>
+    {% endif %}
+
+    {% if raw_query %}
+    <div class="debug-info">
+        <strong>Executed Query:</strong><br>
+        {{ raw_query }}
+    </div>
+    {% endif %}
+</body>
+</html>

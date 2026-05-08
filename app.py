@@ -147,5 +147,24 @@ def admin_system():
     return render_template('system.html', env_vars=env_vars)
 
 if __name__ == '__main__':
-    init_db()
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    if not os.path.exists(DATABASE):
+        import subprocess
+        subprocess.run(["python", "init_db.py"])
+
+    
+    real_flag = os.environ.get("FLAG")
+    if real_flag:
+        try:
+            conn = sqlite3.connect(DATABASE)
+            cursor = conn.cursor()
+           
+            cursor.execute("UPDATE secrets SET value = ? WHERE name = 'FLAG'", (real_flag,))
+            conn.commit()
+            conn.close()
+            print(f"성공: DB의 플래그가 환경 변수값으로 교체되었습니다.")
+        except Exception as e:
+            print(f"오류: 플래그 업데이트 실패 - {e}")
+
+   
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
